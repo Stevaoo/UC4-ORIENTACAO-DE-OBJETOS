@@ -1,0 +1,17 @@
+{
+  "name": "orientada-a-obejeto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stevão",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.2"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
