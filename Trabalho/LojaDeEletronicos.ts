@@ -108,3 +108,44 @@ venda.getVenda()
 venda.setVenda()
 venda.getVenda()
 console.log(venda.calcularTotal())
+
+
+
+// Função principal do Sistema
+function main() {
+    let opcao = '';
+// loop While para o sistema rodar até o Usuario escolher a opeção "5"
+    while (opcao !== '5') {
+        console.log("===== LOJA DE ELETRÔNICOS =====");
+        console.log("1. Cadastrar doador");
+        console.log("2. Listar doadores");
+        console.log("3. Buscar doador por tipo sanguíneo");
+        console.log("4. Buscar doador por data da última doação");
+        console.log("5. Sair");
+        opcao = leitor.question("Escolha uma opcao: ");
+
+        switch(opcao) {
+            case '1':
+                venda.exibirInformacoes();
+                break;
+            case '2':
+                venda.setVenda();
+                break;
+            case '3':
+                venda.getVenda();
+                break;
+            case '4':
+                produto.exibirInformacoes();
+                break;
+            case '5':
+                console.log("Saindo...");
+                break;
+            default:
+                console.log("Opção inválida. Por favor, escolha uma opção válida.");
+        }
+    }
+}
+
+// Invocando a função principal para iniciar o sistema
+main();
+
