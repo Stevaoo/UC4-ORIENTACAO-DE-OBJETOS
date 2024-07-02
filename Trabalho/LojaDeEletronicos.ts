@@ -1,85 +1,110 @@
-// Interface Produto
-interface Produto {
-    nome: string;
-    preco: number;
-    marca: string;
-    calcularLucro(): number;
-    exibirInformacoes(): void;
-}
+let leitor = require("readline-sync")
 
-// Interface Venda
-interface Venda {
-    produto: Produto;
-    quantidade: number;
-    valorTotal: number;
-    data: Date;
-    calcularValorTotal(): number;
-    aplicarDesconto(desconto: number): void;
-    exibirInformacoes(): void;
-}
+class Produto{
+    nome: string
+    preco: number
+    marca: string
+    valorCompra: number
 
-// Implementação da classe Produto
-class ProdutoImp implements Produto {
-    constructor(public nome: string, public preco: number, public marca: string) {}
-
-    calcularLucro(): number {
-        // cálculo de lucro
-        return this.preco * 0.1; // 10% de margem de lucro
+    constructor(nome: string, preco: number, marca: string, valorCompra: number){
+        this.nome = nome
+        this.preco = preco
+        this.marca = marca
+        this.valorCompra = valorCompra
     }
 
-    exibirInformacoes(): void {
-        console.log(`Produto: ${this.nome}, Marca: ${this.marca}, Preço: ${this.preco}`);
-    }
-}
-
-// Implementação da classe Venda
-class VendaImpl implements Venda {
-    valorTotal: number;
-    constructor(public produto: Produto, public quantidade: number, public data: Date) {}
-
-    calcularValorTotal(): number {
-        return this.produto.preco * this.quantidade;
+    getProduto(): void{
+        console.log(`
+            Nome: ${this.nome}
+            Preço: ${this.preco}
+            Marca: ${this.marca}
+            Valor de Atacado: ${this.valorCompra}
+            `);
     }
 
-    aplicarDesconto(desconto: number): void {
-        let valorDescontado = this.calcularValorTotal() * (desconto / 100); // juros simples 
-        this.valorTotal = this.calcularValorTotal() - valorDescontado;
+    setProduto(): void{
+        let nomeUp = leitor.question("Insira o nome do produto: ")
+        let precoUp = leitor.questionInt("Insira o preço: ")
+        let marcaUp = leitor.question("Insira a marca: ")
+        let valorCompraUp = leitor.questionInt("Insira o valor de compra do produto: ")
+        this.nome = nomeUp
+        this.preco = precoUp
+        this.marca = marcaUp
+        this.valorCompra = valorCompraUp
     }
 
-    exibirInformacoes(): void {
-        console.log(`Produto: ${this.produto.nome}, Quantidade: ${this.quantidade}, Data: ${this.data}`);
+    calcularLucro(): number{
+        let lucro = this.preco - this.valorCompra
+        return lucro
     }
 
-    get total(): number {
-        return this.valorTotal;
-    }
-
-    get date(): Date {
-        return this.data;
+    aplicarDesconto(): void{
+        let desconto = leitor.questionInt("Qual a porcentagem de desconto? ")
+        let valorDescontado = (this.preco * (100 - desconto)) / 100
+        console.log(`Valor do produto com desconto: ${valorDescontado}`);
     }
 }
 
-// Criando produtos
-let TV = new ProdutoImp("Smart TV", 2500, "TCL");
-let Telefone = new ProdutoImp("Celular", 5000, "Iphone 13 Pro");
-let VideoGame = new ProdutoImp("Video Game", 3200, "Play 5");
+class Venda{
+    produto: Produto
+    quantidade: number
+    valor_total: number
+    data: string
 
-// Criando vendas
-let venda1 = new VendaImpl(TV, 1, new Date('2024-11-27'));
-let venda2 = new VendaImpl(Telefone, 3, new Date('2024-05-11'));
-let venda3 = new VendaImpl(VideoGame, 1, new Date('2024-02-19'));
+    constructor(produto: Produto, quantidade: number, data: string){
+        this.produto = produto
+        this.quantidade = quantidade
+        this.valor_total = quantidade * this.produto.preco
+        this.data = data
+    }
 
-// Exibindo informações de um produto específico
-TV.exibirInformacoes();
+    getVenda(): void{
+        console.log(`
+            Nome do Produto: ${this.produto.nome}
+            Quantidade: ${this.quantidade}
+            Data: ${this.data}
+            Valor Total: ${this.calcularTotal()}
+            `);
+    }
 
-// Calculando o lucro de um produto específico
-console.log(`Lucro da TV: ${TV.calcularLucro()}`);
+    setVenda(): void{
+        let produtoOuN = leitor.question("Você gostaria de modificar o produto? (s/n) ").toLowerCase()
 
-// Exibindo informações de uma venda específica
-venda1.exibirInformacoes();
+        if(produtoOuN == "s"){
+            this.produto.setProduto()
+            let arrayInfos = modificarVenda()
+            // Indice 0 = Valor da Quantidade
+            // Indice 1 = Valor Data
+            this.quantidade = arrayInfos[0]
+            this.data = arrayInfos[1]
+        } else {
+            let arrayInfos = modificarVenda()
+            this.quantidade = arrayInfos[0]
+            this.data = arrayInfos[1]
+        }
 
-// Calculando o total de vendas realizadas
-let totalVendas = venda1.valorTotal + venda2.valorTotal + venda3.valorTotal;
-console.log(`Total de vendas realizadas: ${totalVendas}`);
+        function modificarVenda(): Array<any>{
+            let quantidadeUp = leitor.questionInt("Qual a quantidade?: ")
+            let dataUp = leitor.question("Qual a data da venda?: ")
+            let arrayInfos = [quantidadeUp, dataUp]
 
+            return arrayInfos
+        }
+    }
 
+    calcularTotal(): number{
+        let total = this.quantidade * this.produto.preco
+        return total
+    }
+
+}
+
+let produto = new Produto("Teste", 3000, "Teste", 2000)
+let venda = new Venda(produto, 3, "01/07/2024")
+
+venda.getVenda()
+venda.setVenda()
+venda.getVenda()
+venda.setVenda()
+venda.getVenda()
+console.log(venda.calcularTotal())
