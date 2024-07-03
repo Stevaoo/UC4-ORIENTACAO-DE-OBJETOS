@@ -1,6 +1,9 @@
+// LOJA DE ELETRÔNICOS 
 let leitor = require("readline-sync")
 
+// Definição da classe Produto
 class Produto{
+    // Atributos da classe Produto
     nome: string
     preco: number
     marca: string
@@ -12,7 +15,7 @@ class Produto{
         this.marca = marca
         this.valorCompra = valorCompra
     }
-
+    //Exibe os detalhes do produto no console.
     getProduto(): void{
         console.log(`
             Nome: ${this.nome}
@@ -21,7 +24,7 @@ class Produto{
             Valor de Atacado: ${this.valorCompra}
             `);
     }
-
+    // Permite atualizar os dados do produto com entrada do usuário.
     setProduto(): void{
         let nomeUp = leitor.question("Insira o nome do produto: ")
         let precoUp = leitor.questionInt("Insira o preço: ")
@@ -32,12 +35,12 @@ class Produto{
         this.marca = marcaUp
         this.valorCompra = valorCompraUp
     }
-
+    // Calcula o lucro obtido ao vender o produto.
     calcularLucro(): number{
         let lucro = this.preco - this.valorCompra
         return lucro
     }
-
+    // Aplica um desconto ao preço do produto com base na entrada do usuário.
     aplicarDesconto(): void{
         let desconto = leitor.questionInt("Qual a porcentagem de desconto? ")
         let valorDescontado = (this.preco * (100 - desconto)) / 100
@@ -45,7 +48,9 @@ class Produto{
     }
 }
 
+// Definição da classe Venda
 class Venda{
+    // Atributos da classe Venda
     produto: Produto
     quantidade: number
     valor_total: number
@@ -57,7 +62,7 @@ class Venda{
         this.valor_total = quantidade * this.produto.preco
         this.data = data
     }
-
+    //Exibe os detalhes do produto no console.
     getVenda(): void{
         console.log(`
             Nome do Produto: ${this.produto.nome}
@@ -66,7 +71,7 @@ class Venda{
             Valor Total: ${this.calcularTotal()}
             `);
     }
-
+    // Permite atualizar os dados do produto com entrada do usuário.
     setVenda(): void{
         let produtoOuN = leitor.question("Você gostaria de modificar o produto? (s/n) ").toLowerCase()
 
@@ -82,7 +87,7 @@ class Venda{
             this.quantidade = arrayInfos[0]
             this.data = arrayInfos[1]
         }
-
+        // Função interna para modificar os detalhes da venda.
         function modificarVenda(): Array<any>{
             let quantidadeUp = leitor.questionInt("Qual a quantidade?: ")
             let dataUp = leitor.question("Qual a data da venda?: ")
@@ -91,61 +96,66 @@ class Venda{
             return arrayInfos
         }
     }
-
+    // Calcula o valor total da venda com base na quantidade e preço do produto.
     calcularTotal(): number{
         let total = this.quantidade * this.produto.preco
         return total
     }
 
 }
+ // Função Principal!!!
+function main(){
 
 let produto = new Produto("Teste", 3000, "Teste", 2000)
 let venda = new Venda(produto, 3, "01/07/2024")
 
-venda.getVenda()
-venda.setVenda()
-venda.getVenda()
-venda.setVenda()
-venda.getVenda()
-console.log(venda.calcularTotal())
+let opcao = '';
+// Loop principal para o Funcionamento com a interação com o Úsuario
+while (opcao !== '8'){
+    console.log("\n===== LOJA DE ELETRÔNICOS =====",);
+    console.log("1. Exebir dados da Produto ");
+    console.log("2. Atualizar dados do Produto ");
+    console.log("3. Calcular lucro do Produto ");
+    console.log("4. Aplicar desconto ao Produto");
+    console.log("5. Exibir dados da Venda");
+    console.log("6. AUtualizar dados da Venda");
+    console.log("7. Calcular total da Venda");
+    console.log("8. Sair\n");
+    opcao = leitor.question("Escolha uma opcao: ");
 
+        // Switch case para executar diferentes funcionalidades
+        switch (opcao){
 
-
-// Função principal do Sistema
-function main() {
-    let opcao = '';
-// loop While para o sistema rodar até o Usuario escolher a opeção "5"
-    while (opcao !== '5') {
-        console.log("===== LOJA DE ELETRÔNICOS =====");
-        console.log("1. Cadastrar doador");
-        console.log("2. Listar doadores");
-        console.log("3. Buscar doador por tipo sanguíneo");
-        console.log("4. Buscar doador por data da última doação");
-        console.log("5. Sair");
-        opcao = leitor.question("Escolha uma opcao: ");
-
-        switch(opcao) {
-            case '1':
-                venda.exibirInformacoes();
-                break;
-            case '2':
-                venda.setVenda();
-                break;
-            case '3':
-                venda.getVenda();
-                break;
-            case '4':
-                produto.exibirInformacoes();
-                break;
-            case '5':
-                console.log("Saindo...");
-                break;
-            default:
-                console.log("Opção inválida. Por favor, escolha uma opção válida.");
+        case '1': 
+            produto.getProduto();
+            break;
+        case '2':
+            produto.setProduto();
+            break;
+        case '3':
+            let lucro = produto.calcularLucro()
+            console.log(`O lucro do Prodruto foi ${lucro}`);
+            break;
+        case '4':
+            produto.aplicarDesconto();
+            break;
+        case '5':
+            venda.getVenda();
+            break;
+        case '6':
+            venda.setVenda();
+            break;
+        case '7' :
+            let totalVenda = venda.calcularTotal()
+            console.log(`Total da Venda: ${totalVenda}`);
+            break;
+        case '8':
+            console.log("Saindo............");
+            break;
+        default:
+            console.log("Opção inválida. Por favor, escolha uma opção válida.");
         }
     }
 }
 
-// Invocando a função principal para iniciar o sistema
-main();
-
+main()
