@@ -127,10 +127,10 @@ class BibliotecaDeJogos implements IBibliotecaDeJogos {
         console.log(`Jogo "${jogo.titulo}" foi adicionado à biblioteca.`);
     }
 
-     public removerJogo(): void {
+    public removerJogo(): void {
         console.log(this.jogos);
         let tituloExcluir = leitor.question('Qual titulo deseja excluir: ')
-        this.jogos = this.jogos.filter(objetoJogo => objetoJogo.titulo = tituloExcluir) 
+        this.jogos = this.jogos.filter(objetoJogo => objetoJogo.titulo !== tituloExcluir) 
     }
     listarJogos(): void {
         console.log("Jogos na Biblioteca:");
