@@ -41,16 +41,15 @@ interface IjogoEletronico{
     setDetalhes();
 }
 
+
 class JogoEletronico extends Jogo implements IjogoEletronico{
-    jogo: Jogo;
     plataforma: string;
-    
-    super(titulo: string, genero: string, classificacaoEtaria: number, plataforma: string){
-        this.titulo =  titulo;
-        this.genero = genero;
-        this.classificacaoEtaria = classificacaoEtaria;
-        this.plataforma = plataforma;
+    constructor(titulo: string, genero: string, classificacaoEtaria: number){
+            super(titulo,genero,classificacaoEtaria)
+        this.plataforma = this.plataforma;
+        {
     }
+}
 
     getDetalhees(): void {
         console.log(`
@@ -128,10 +127,11 @@ class BibliotecaDeJogos implements IBibliotecaDeJogos {
         console.log(`Jogo "${jogo.titulo}" foi adicionado à biblioteca.`);
     }
 
-    removerJogo(titulo: string): void {
-        this.jogos = this.jogos.filter(jogo => jogo.titulo !== titulo);
+     public removerJogo(): void {
+        console.log(this.jogos);
+        let tituloExcluir = leitor.question('Qual titulo deseja excluir: ')
+        this.jogos = this.jogos.filter(objetoJogo => objetoJogo.titulo = tituloExcluir) 
     }
-
     listarJogos(): void {
         console.log("Jogos na Biblioteca:");
         this.jogos.forEach(jogo => {
