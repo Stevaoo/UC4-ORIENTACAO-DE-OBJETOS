@@ -194,8 +194,7 @@ function main() {
                 biblioteca.adicionarJogo(jogo);
                 break;
             case '9':
-                let tituloRemover = leitor.question("Insira o Título do Jogo a Remover: ");
-                biblioteca.removerJogo(tituloRemover);
+                biblioteca.removerJogo();
                 break;
             case '10':
                 console.log("SAINDO...");
