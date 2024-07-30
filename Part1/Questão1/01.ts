@@ -1,105 +1,42 @@
 import { Ialuno } from "./interface";
 
-class Alunos implements Ialuno{
-    Matricula: number;
-    Nome: string;
-    Nota1_da_prova: number;
-    Nota2_da_prova: number;
-    Nota_do_trabalho: number;
+class Aluno implements Ialuno{
+    // Atributos da classe
+    matricula: number;
+    nome: string;
+    notaProva1: number;
+    notaProva2: number;
+    notaTrabalho: number;
 
-    constructor(MatriculaDoAluno: number, NomeDoAluno: string, Nota1Prova: number, Nota2Prova: number, NotaTrabalho: number){
-        this.Matricula = MatriculaDoAluno;
-        this.Nome = NomeDoAluno;
-        this.Nota1_da_prova = Nota1Prova;
-        this.Nota2_da_prova = Nota2Prova;
-        this.Nota_do_trabalho = NotaTrabalho
+    // Construtor para inicializar os atributos
+    constructor(matricula: number, nome: string, notaProva1: number, notaProva2: number, notaTrabalho: number) {
+        this.matricula = matricula;
+        this.nome = nome;
+        this.notaProva1 = notaProva1;
+        this.notaProva2 = notaProva2;
+        this.notaTrabalho = notaTrabalho;
+    }
+    ["constructor"](matricula: number, nome: string, notaProva1: number, notaProva2: number, notaTrabalho: number) {
+        throw new Error("Method not implemented.");
     }
 
+    // Método para calcular a média das provas 
     media(): number {
-        
+        return (this.notaProva1 + this.notaProva2 ) / 2;
     }
 
+    // Método para calcular a nota final usar as provas e trabalhos como  media 
     final(): number {
-        
-        
+        const final = (this.media() + this.notaTrabalho / 2) 
+        return final;
+        ;
     }
 }
 
-=======================================================================================================================
+const aluno1 = new Aluno(1010, 'Stevão Rodrigues', 7.5, 2.0, 9.0);
 
-    /*### Questão 2 - Calendário Mágico
+console.log(`Matrícula: ${aluno1.matricula}`); // 1010
+console.log(`Nome: ${aluno1.nome}`); // Stevão Rodrigues
+console.log(`Média: ${aluno1.media().toFixed(2)}`); // 4.17
+console.log(`Nota Final: ${aluno1.final().toFixed(2)}`); // 9.25
 
-Escreva uma classe Data cuja instância (objeto) represente uma data mágica. Esta
-classe deverá dispor dos seguintes métodos:
-
-typescript
-interface Data {
-    constructor(dia: number, mes: number, ano: number);
-    compara(outraData: Data): number;
-    getDia(): number;
-    getMes(): number;
-    getMesExtenso(): string;
-    getAno(): number;
-    isBissexto(): boolean;
-    clone(): Data;
-}
-*/
-
-import { Idata } from "./interface"
-
-class Data implements Idata{
-    dia: number
-    mes: number
-    ano: number
-    constructor(dia: number, mes: number, ano: number){
-        this.dia = dia
-        this.mes = mes
-        this.ano = ano
-    }
-    comparar(outraData: Data): void{
-        if(outraData === novaData){
-            console.log('As datas são iguas')
-        }
-        else{
-            console.log('As datas são diferentes')
-        }
-    }
-
-    getDia(): number{
-        return this.dia
-    }
-
-    getMes(): number{
-        return this.mes
-    }
-
-    getAno(): number{
-        return this.ano
-    }
-    
-    getMesExtenso(): string {
-        const meses: string[] = [ // array para os meses em extensão
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-        return meses[this.mes - 1]; // Faço uma logica para retornar a minha array(Janeiro) sendo o indice 1 janeiro entao eu Faço menos 1  
-    }
-    isBissexto(): boolean {
-        if (this.ano % 4 === 0) {
-            if (this.ano % 100 === 0) {
-                return this.ano % 400 === 0;
-            }
-            return true;
-        }
-        return false;
-    }
-    
-    clone(): void{
-        const a =  new Data(this.dia, this.mes, this.ano);
-        console.log(a);
-        
-    }
-}
-/*
-let novaData = new Data('22/04/2020', '17/03/2018)
-let outraData = new Data ('03/07/2002', '04/05/03')*/
