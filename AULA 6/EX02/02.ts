@@ -1,10 +1,11 @@
+let rl2 = require("readline-sync")
 export class Ponto2D {
     private x: number; // Coordenada X do ponto
     private y: number; // Coordenada Y do ponto
 
-    constructor() {
-        this.x = 0; // Começa a coordenada X com 0
-        this.y = 0; // Começa a coordenada Y com 0
+    constructor(x: number = 0, y: number = 0) {
+        this.x = x;
+        this.y = y;
     }
 
     // Retorna o valor inicial da coordenada X
@@ -41,10 +42,10 @@ export class Ponto2D {
 
     // Compara se os pontos são iguais 
     public equals(outroPonto: Ponto2D): boolean {
-        if(outroPonto.getX() === this.x && outroPonto.getY() === this.y){
-            return true 
+        if (outroPonto.getX() === this.x && outroPonto.getY() === this.y) {
+            return true
         } else {
-            return false 
+            return false
         }
     }
 
@@ -55,19 +56,17 @@ export class Ponto2D {
 
     // Calcula a distância entre este ponto e outro ponto
     public distancia(outroPonto: Ponto2D): number {
-        const dx = outroPonto.getX() - this.x; 
+        const dx = outroPonto.getX() - this.x;
         // Valor do xRetorna - xDefinido
         // Valor inicial  0  - Novo valor que foi definido
-        const dy = outroPonto.getY() - this.y; 
+        const dy = outroPonto.getY() - this.y;
         const d = dx + dy
         return d; // Distância
     }
 
     // Cria uma cópia deste ponto
     public clone(): Ponto2D {
-        let clone = new Ponto2D; // Copia o método coordenadas
-        clone.x = this.x
-        clone.y = this.y
+        let clone = new Ponto2D(this.x, this.y); // Copia o método coordenadas
         return clone
     }
 
@@ -75,7 +74,7 @@ export class Ponto2D {
 //Aqui a gente define as coordenadas que queremos no plano cartesiano
 export class PontoXY extends Ponto2D {
     constructor(x: number, y: number) {
-        super(); 
+        super(x, y);
         this.setCoordenada(x, y); // Define as coordenadas X e Y do ponto
     }
 }
@@ -88,7 +87,7 @@ export class PontoEx extends Ponto2D {
     }
 }
 
-
+/*
 const ponto1 = new PontoXY(20, 35); // Um ponto com coordenadas (20, 35)
 const ponto2 = new PontoEx(ponto1); // Um ponto com as mesmas coordenadas que ponto1
 
@@ -110,4 +109,92 @@ console.log(`Distância: ${distancia}`); // Mostra a Distância entre os pontos
 // Clonando ponto1
 const pontoClone = ponto1.clone();
 console.log(pontoClone); //  x: 2, y: 4
+*/
+
+// Função para criar um objeto Ponto2D
+function CriaXY(): Ponto2D {
+    let valorX = rl2.questionInt("Defina o Valor do X: ");
+    let valorY = rl2.questionInt("Defina o Valor do Y: ");
+    return new Ponto2D(valorX, valorY);
+}
+let ponto1 = new Ponto2D(0, 0)
+let menu: boolean = true
+while (menu) {
+    console.log(`\n MENU: 
+    0- Definir Ponto2D Inicial
+    1- Definir Valor Inicial do X
+    2- Definir Valor Inicial do Y
+    3- Definir Coordenada
+    4- Comparar Coordenadas
+    5- Valor das Coordenadas em String
+    6- Calcular Distancia 
+    7- Vizualizar X
+    8- Vizalizar Y
+    9- Vizualizar Coordenada
+    10- Sair `);
+
+
+    let escolha = rl2.questionInt("Escolha Uma Opecao: ")
+    switch (escolha) {
+        case 0:
+            ponto1 = CriaXY()
+            break
+        case 1: {
+            let x = rl2.questionInt("Digite o valor para X: ");
+            ponto1.setCoordenada(x, ponto1.getY());
+            break;
+        }
+        case 2: {
+            let y = rl2.questionInt("Digite o valor para Y: ");
+            ponto1.setCoordenada(ponto1.getX(), y);
+            break;
+        }
+        case 3: {
+            let x = rl2.questionInt("Digite o valor para X: ");
+            let y = rl2.questionInt("Digite o valor para Y: ");
+            ponto1.setCoordenada(x, y);
+            break;
+        }
+        case 4: {
+            // Comparar Coordenadas (Você pode adicionar mais lógica aqui se necessário)
+            console.log(`Comparar Coordenadas não implementado.`);
+            break;
+        }
+        case 5: {
+            console.log(`Coordenadas em String: (${ponto1.getX()}, ${ponto1.getY()})`);
+            break;
+        }
+        case 6: {
+            // Calcular Distância (Exemplo simples de distância com outro ponto)
+            let outroX = rl2.questionInt("Digite o valor para X do outro ponto: ");
+            let outroY = rl2.questionInt("Digite o valor para Y do outro ponto: ");
+            let ponto2 = new PontoXY(outroX, outroY);
+            // calcula a raiz quadrada de um número (Math.sqrt), usada para elevar um número a uma determinada potência(Math.pow)
+            let distancia = Math.sqrt(Math.pow(ponto1.getX() - ponto2.getX(), 2) + Math.pow(ponto1.getY() - ponto2.getY(), 2));
+            console.log(`Distância: ${distancia}`);
+            break;
+        }
+        case 7: {
+            console.log(`X = ${ponto1.getX()}`);
+            break;
+        }
+        case 8: {
+            console.log(`Y = ${ponto1.getY()}`);
+            break;
+        }
+        case 9: {
+            console.log(`Coordenada: (${ponto1.getX()}, ${ponto1.getY()})`);
+            break;
+        }
+        case 10: {
+            console.log("Saindo...");
+            menu = false;
+            break;
+        }
+        default: {
+            console.log("Opção inválida.");
+            break;
+        }
+    }
+}
 
