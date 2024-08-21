@@ -1,196 +1,141 @@
 let rl3 = require("readline-sync")
+//Classe que representa um número complexo.
 export class NumeroComplexo {
-    comparar(arg0: NumeroComplexo) {
-        throw new Error("Method not implemented.");
-    }
-    visualizar() {
-        throw new Error("Method not implemented.");
-    }
-    private real: number; // Parte real
-    private imaginario: number; // Parte imaginária
+    private Real: number;
+    private Imaginario: number;
 
-    constructor(real: number, imaginario: number) {
-        this.real = real;
-        this.imaginario = imaginario
+    constructor(Real: number, Imaginario: number) {
+        this.Real = Real;
+        this.Imaginario = Imaginario;
     }
-    //Retorna REAL
+
+    //Retorna o Valor da parte real.
     public getReal(): number {
-        return this.real;
-    }// Retorna IMAGINARIO
+        return this.Real;
+    }
+
+    //Novo valor para a parte real
+    public setReal(Real: number): void {
+        this.Real = Real;
+    }
+
+    //Retorna o Valor da parte imaginaria.
     public getImaginario(): number {
-        return this.imaginario;
-    }//Define REAL
-    public setReal(reaL: number): void {
-        this.real = reaL;
-    }// Define IMAGINARIO
-    public setImaginario(imagario: number): void {
-        this.imaginario = imagario;
+        return this.Imaginario;
     }
-    //Soma outro número complexo ao número complexo atual.
-    public somar(outroComplexo: NumeroComplexo) {
-        const novoReal = this.real = + outroComplexo.real;
-        const novoImaginario = this.imaginario + outroComplexo.imaginario;
-        return new NumeroComplexo(novoReal, novoImaginario);
+
+    // Novo valor para a parte imaginária.
+    public setImaginario(Imaginario: number): void {
+        this.Imaginario = Imaginario;
     }
-    //Subtrai outro número complexo do número complexo atual.
-    public subtrair(outroComplexo: NumeroComplexo) {
-        const novoReal = this.real - outroComplexo.real;
-        const novoImaginario = this.imaginario - outroComplexo.imaginario;
-        return new NumeroComplexo(novoReal, novoImaginario);
+
+    //Soma dois números complexos.
+    public somar(outroComplexo: NumeroComplexo): NumeroComplexo {
+        let real = this.Real + outroComplexo.getReal();
+        let imaginario = this.Imaginario + outroComplexo.getImaginario();
+        return new NumeroComplexo(real, imaginario);
     }
-    //Multiplica o número complexo atual por outro número complexo.
-    public multiplicar(outroComplexo: NumeroComplexo) {
-        const novoReal = this.real * outroComplexo.real;
-        const novoImaginario = this.imaginario * outroComplexo.imaginario;
-        return new NumeroComplexo(novoReal, novoImaginario);
+
+    // Subtrai um número complexo de outro.
+    public subtrair(outroComplexo: NumeroComplexo): NumeroComplexo {
+        let real = this.Real - outroComplexo.getReal();
+        let imaginario = this.Imaginario - outroComplexo.getImaginario();
+        return new NumeroComplexo(real, imaginario);
     }
-    //Divide o número complexo atual por outro número complexo.
-    public dividir(outroComplexo: NumeroComplexo) {
-        const novoReal = this.real / outroComplexo.real;
-        const novoImaginario = this.imaginario / outroComplexo.imaginario;
-        return new NumeroComplexo(novoReal, novoImaginario);
+
+
+    //Multiplica dois números complexos.
+    public multiplicar(outroComplexo: NumeroComplexo): NumeroComplexo {
+        let real = (this.Real * outroComplexo.getReal()) - (this.Imaginario * outroComplexo.getImaginario());
+        let imaginario = (this.Real * outroComplexo.getImaginario()) + (this.Imaginario * outroComplexo.getReal());
+        return new NumeroComplexo(real, imaginario);
     }
-    //Verifica se o número complexo atual é igual a outro número complexo.
-    public equals(outroComplexo: NumeroComplexo): boolean {
-        if (outroComplexo.getReal() === this.real && outroComplexo.getImaginario() === this.imaginario) {
-            return true
-        } else {
-            return false
-        }
+
+    // Divide um número complexo por outro.
+    public dividir(outroComplexo: NumeroComplexo): NumeroComplexo {
+        let partePotenciacao = (outroComplexo.getReal() * outroComplexo.getReal()) + (outroComplexo.getImaginario() * outroComplexo.getImaginario());
+
+        // Calcula a parte real do resultado
+        let real = ((this.Real * outroComplexo.getReal()) + (this.Imaginario * outroComplexo.getImaginario())) / partePotenciacao;
+
+        // Calcula a parte imaginária do resultado
+        let imaginario = ((this.Imaginario * outroComplexo.getReal()) - (this.Real * outroComplexo.getImaginario())) / partePotenciacao;
+        return new NumeroComplexo(real, imaginario);
     }
-    //Retorna em string do número complexo.
+
+    // Calcula o módulo (ou magnitude) do número complexo. que é a raiz quadrada da soma dos quadrados da parte real e imaginária.
     public modulo(): number {
-        return Math.sqrt(this.real ** 2 + this.imaginario ** 2);
+        return Math.sqrt((this.Real ** 2) + (this.Imaginario ** 2));
     }
 
-    // Função para calcular o módulo de um número complexo
-    public calcularModulo(real, imaginario) {
-        return Math.sqrt(Math.pow(real, 2) + Math.pow(imaginario, 2));
+    //Verifica se dois números complexos são iguais.
+    public equals(outroComplexo: NumeroComplexo): boolean {
+        return (this.Imaginario === outroComplexo.getImaginario() && this.Real === outroComplexo.getReal());
     }
 
-}
-/*
-// Cria o NumeroComplexo
-const num1 = new NumeroComplexo(2, 3); // Representa 2 + 3i
-const num2 = new NumeroComplexo(4, -1); // Representa 4 - 1i
-
-// Soma dois números complexos
-const soma = num1.somar(num2);
-console.log(soma.toString()); // Saída: NÚMERO REAL: 6, NÚMERO IMAGINÁRIO: 2
-
-// Subtrai dois números complexos
-const subtracao = num1.subtrair(num2);
-console.log(subtracao.toString()); // Saída: NÚMERO REAL: -2, NÚMERO IMAGINÁRIO: 4
-
-// Multiplica dois números complexos
-const multiplicacao = num1.multiplicar(num2);
-console.log(multiplicacao.toString()); // Saída: NÚMERO REAL: 11, NÚMERO IMAGINÁRIO: 10
-
-// Divide dois números complexos
-const divisao = num1.dividir(num2);
-console.log(divisao.toString()); // Saída: NÚMERO REAL: 0.44, NÚMERO IMAGINÁRIO: 0.88
-
-// Verifica igualdade
-const iguais = num1.equals(num2);
-console.log(iguais); // Saída: false
-
-// Modifica partes do número complexo
-num1.setReal(15);
-num1.setImaginario(-20);
-console.log(num1.toString()); // Saída: NÚMERO REAL: 15, NÚMERO IMAGINÁRIO: -20
-*/
-
-function CriaNumeroComplexo(): NumeroComplexo {
-    let valorReal = rl3.questionInt("Defina o valor REAL: ")
-    let valorImaginario = rl3.questionInt("DEfina o valor Imaginario: ")
-    return new NumeroComplexo(valorReal, valorImaginario);
+    //Retorna em string onúmero complexo.
+    public toString(): string {
+        return `REAL: ${this.Real} + IMAGINARIO: ${this.Imaginario}i`;
+    }
 }
 
-let complexo1 = new NumeroComplexo(0, 0);
-let main: boolean = true
-while (main) {
-    console.log(`\n MENU
-    0- Definir o Numero Complexo 
-    1- Definir o Numero REAL
-    2- Definir o Numeor IMAGINARIO
-    3- Somar Numero Complexo
-    4- Subtrair Numero Complexo 
-    5- Multiplicar Numero Complexo 
-    6- Dividir Numero Complexo
-    7- Compara Numero Complexo 
-    8- Vizualizar Numero Complexo 
-    9- Modulo Numero Complexo  
-    10- Sair`);
+// Função principal que exibe o menu e processa as opções do usuário
+function menu() {
+    console.log('Escolha uma opção:');
+    console.log('1. Criar um número complexo');
+    console.log('2. Somar dois números complexos');
+    console.log('3. Subtrair dois números complexos');
+    console.log('4. Multiplicar dois números complexos');
+    console.log('5. Dividir dois números complexos');
+    console.log('6. Calcular o módulo de um número complexo');
+    console.log('7. Verificar a igualdade de dois números complexos');
+    console.log('8. Sair');
 
-    let escolha = rl3.questionInt("Escolha uma opecao: ")
-    switch (escolha) {
-        case 0:
-            const real = rl3.questionInt("Defina o valor REAL: ");
-            const imaginario = rl3.questionInt("Defina o valor IMAGINÁRIO: ");
-            complexo1 = new NumeroComplexo(real, imaginario);
+    const opcao = await lerLinha('Digite o número da opção desejada: ');
+
+    switch (opcao) {
+        case '1':
+           rl3.questionInt.NumeroComplexo();
             break;
-
-        case 1:
-            const novoReal = rl3.questionInt("Digite o valor do número REAL: ");
-            complexo1.setReal(novoReal);
+        case '2':
+            await operarNumerosComplexos('somar');
             break;
-
-        case 2:
-            const novoImaginario = rl3.questionInt("Digite o valor IMAGINÁRIO: ");
-            complexo1.setImaginario(novoImaginario);
+        case '3':
+            await operarNumerosComplexos('subtrair');
             break;
-
-        case 3:
-            const realSoma = rl3.questionInt("Digite o valor REAL do número para somar: ");
-            const imaginarioSoma = rl3.questionInt("Digite o valor IMAGINÁRIO do número para somar: ");
-            const soma = complexo1.somar(new NumeroComplexo(realSoma, imaginarioSoma));
-            console.log(`Resultado da soma: ${soma.visualizar()}`);
+        case '4':
+            await operarNumerosComplexos('multiplicar');
             break;
-
-        case 4:
-            const realSubtracao = rl3.questionInt("Digite o valor REAL do número para subtrair: ");
-            const imaginarioSubtracao = rl3.questionInt("Digite o valor IMAGINÁRIO do número para subtrair: ");
-            const subtracao = complexo1.subtrair(new NumeroComplexo(realSubtracao, imaginarioSubtracao));
-            console.log(`Resultado da subtração: ${subtracao.visualizar()}`);
+        case '5':
+            await operarNumerosComplexos('dividir');
             break;
-
-        case 5:
-            const realMultiplicacao = rl3.questionInt("Digite o valor REAL do número para multiplicar: ");
-            const imaginarioMultiplicacao = rl3.questionInt("Digite o valor IMAGINÁRIO do número para multiplicar: ");
-            const multiplicacao = complexo1.multiplicar(new NumeroComplexo(realMultiplicacao, imaginarioMultiplicacao));
-            console.log(`Resultado da multiplicação: ${multiplicacao.visualizar()}`);
+        case '6':
+            await calcularModulo();
             break;
-
-        case 6:
-            const realDivisao = rl3.questionInt("Digite o valor REAL do número para dividir: ");
-            const imaginarioDivisao = rl3.questionInt("Digite o valor IMAGINÁRIO do número para dividir: ");
-            const divisao = complexo1.dividir(new NumeroComplexo(realDivisao, imaginarioDivisao));
-            console.log(`Resultado da divisão: ${divisao.visualizar()}`);
+        case '7':
+            await verificarIgualdade();
             break;
-
-        case 7:
-            const realComparacao = rl3.questionInt("Digite o valor REAL do número para comparar: ");
-            const imaginarioComparacao = rl3.questionInt("Digite o valor IMAGINÁRIO do número para comparar: ");
-            const comparacao = complexo1.comparar(new NumeroComplexo(realComparacao, imaginarioComparacao));
-            console.log(`Os números são ${comparacao}? 'iguais' : 'diferentes'}`);
-            break;
-
-        case 8:
-            console.log(`Número complexo atual: ${complexo1.visualizar()}`);
-            break;
-
-        case 9:
-            console.log(`Módulo do número complexo: ${complexo1.modulo()}`);
-            break;
-
-        case 10:
-            console.log("Saindo...");
-            const mainMenu = false;
-            break;
-
+        case '8':
+            console.log('Saindo...');
+            rl3.close();
+            return;
         default:
-            console.log("Opção inválida.");
-            break;
+            console.log('Opção inválida!');
     }
+
+    // Volta ao menu principal
+    menu();
 }
- main()
+
+function operarNumerosComplexos(arg0: string) {
+    throw new Error("Function not implemented.");
+}
+
+function calcularModulo() {
+    throw new Error("Function not implemented.");
+}
+
+function verificarIgualdade() {
+    throw new Error("Function not implemented.");
+}
+
