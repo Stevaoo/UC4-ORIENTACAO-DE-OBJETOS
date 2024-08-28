@@ -1,4 +1,4 @@
-let leitor = require('readline-sync')
+let leitor1 = require('readline-sync')
 
 class Aluno{
     nome: string
@@ -23,10 +23,45 @@ class Aluno{
     
 }
 
+function CriarAluno(): Aluno {
+    let nomeUp = leitor1.question("Insira o nome: ")
+    return new Aluno(nomeUp);
+}
+
+let aluno1 = CriarAluno();
+
+let Menu: boolean = true;
+while (Menu) {
+    let opecao = leitor1.questionInt("Insira o numero desejado: \n 1 - Criar o Aluno \n 2 - Adicionar Notas \n 3 - Calcular Notas")
+
+    
+switch (opecao) {
+    case 1:
+        aluno1;
+        break;
+    case 2:
+        aluno1.addNotas();
+        break;
+    case 3:
+        aluno1.calcularNotas();
+    case 4:
+        menu = false;
+        break;
+    default:
+        console.log("Opecao invalida. Tente novamente.");
+        break;
+    }
+}
+
+console.log("Programa encerrado.");
+
+
+/*
 let nomeALuno = leitor.question("Qual e o nome do aluno? ")
 let alunoNew = new Aluno(nomeALuno)
 
 alunoNew.addNotas()
 
 console.log(alunoNew.calcularNotas());
+*/
 
