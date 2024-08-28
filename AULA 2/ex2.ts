@@ -1,3 +1,5 @@
+var rl = require("readline-sync");
+
 class livro {
     titulo: string
     autor: string
@@ -12,6 +14,36 @@ class livro {
     }
 }
 
+function criarLivro(): livro {
+    let tituloUp = rl.question("Insira o titulo: ")
+    let autorUp = rl.question("Insira o autor: ")
+    let anoPublicacao = rl.questionInt("Insira o ano da publicacao: ")
+    return new livro(tituloUp,autorUp,anoPublicacao);
+}
+
+let livro1 = criarLivro();
+
+let main: boolean = true;
+while (main) {
+    let opecao = rl.questionInt("Insira o numero da opecao desejada: \n 1 - Criar Livro \n 2 - Obter Datalhes ")
+    
+    switch (opecao) {
+        case 1: 
+            livro1;
+            break;
+        case 2:
+            livro1.obterDetalher();
+            break;
+        case 3:
+            main = false;
+            break;
+        default:
+            console.log("Opecao invalida. Tente novamente.");
+            break;
+    }
+}
+/*
 var livroNew = new livro('Codigo dos guri','Tevinho',2025)
 console.log(livroNew);
 livroNew.obterDetalher()
+*/
