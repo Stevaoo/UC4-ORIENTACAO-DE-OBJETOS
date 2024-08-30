@@ -1,3 +1,6 @@
+import { Data } from "../Questão2/02";
+
+var ask = require('readline-sync');
 export interface Voo {
     constructor(numeroVoo: string, data: string);
     proximoLivre(): number;
@@ -67,3 +70,39 @@ console.log(vooUm.proximoLivre)
 console.log(vooUm.verifica(1))
 console.log(vooUm.ocupa(2))
 console.log(vooUm.vagas())
+
+
+const voo = new Voo("182","10/09/2020");
+/*
+    banco de dados dos voos
+    selecionar voo para comprar passagem 
+    sistema de primeira classe
+    tempo estimado de voo
+*/
+function menu() {
+    let option:boolean = true;
+
+    while(option) {
+        console.log("\n--------MENU--------\n1. Escolher Assento\n2. Ver o proximo assento livre\n3. Quantidade de assentos disponiveis\n4. Sair\n--------------------\nEscolha uma opção:")         
+        let choose = ask.questionInt()
+        console.clear()
+        switch(choose) {
+            case 1:
+                console.log("Qual assento voce deseja escolher?")
+                let ocupa = ask.questionInt()
+                voo.ocupa(ocupa)
+                break
+            case 2:
+                voo.proximoLivre()
+                break
+            case 3:
+                voo.vagas()
+                break
+            default:
+                option = false
+                break
+        }
+    }
+}
+
+menu()
