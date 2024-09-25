@@ -1,4 +1,3 @@
-import { prependListener } from "process";
 
 export let rl = require("readline-sync");
 
