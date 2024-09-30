@@ -85,7 +85,7 @@ function main() {
 
     while (continuar) {
         fila.exibirMenu(); // Exibe o menu de opções
-        const opcao = rl.questionInt("Escolha uma opção: "); 
+        const opcao = rl.questionInt("Escolha uma opcao: "); 
         
         switch (opcao) {
             case 1:
@@ -131,6 +131,7 @@ function pressioneEnter(){
 pressioneEnter()
 // Chama a função main 
 main();
+
 
 
 
